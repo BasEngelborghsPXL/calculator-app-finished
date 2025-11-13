@@ -20,7 +20,7 @@ jobs:
 
    - name: Run tests and create report
      run: |
-      mkdir -p rest-report
+      mkdir -p test-report
       npm test > test-report/unit-tests.txt
 
    - name: Bundle app to zip
