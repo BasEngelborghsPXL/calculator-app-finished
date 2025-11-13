@@ -17,11 +17,16 @@ jobs:
    - run: npm install
    - run: npm ci
    - run: npm run build --if-present
-
-   - name: Run tests and create report
-     run: |
-      mkdir -p test-report
-      npm test > test-report/unit-tests.txt
+   
+   - name: Run tests and generate coverage
+     run: npm test -- --coverage
+   
+   - name: Code Coverage Report
+     uses: mridang/action-test-reporter@v1
+     with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      coverage-file: ./coverage/clover.xml # Path to your clover, cobertura, jacoco, or lcov file
+      working-directory: ./
 
    - name: Bundle app to zip
      run: zip -r app.zip . -x ".git/*"
