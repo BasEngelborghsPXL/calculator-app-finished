@@ -1,0 +1,33 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.PROD_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Docker container
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.PROD_IP }} << 'EOF'
+            docker pull 123c1pher/lab4:latest
+            docker stop app || true
+            docker rm app || true
+            docker run -d \
+              --name app \
+              -p 80:80 \
+              123c1pher/lab4:latest
+          EOF
