@@ -13,17 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup SSH
+      - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
+          ssh-keyscan -H ${{ secrets.PROD_IP }} >> ~/.ssh/known_hosts
 
       - name: Deploy Docker container
         run: |
-          ssh -o StrictHostKeyChecking=no \
-              ${{ secrets.SSH_USER }}@${{ secrets.PROD_IP }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
+            ${{ secrets.SSH_USER }}@${{ secrets.PROD_IP }} << 'EOF'
             docker pull 123c1pher/lab4:latest
             docker stop app || true
             docker rm app || true
@@ -32,4 +32,3 @@ jobs:
               -p 80:80 \
               123c1pher/lab4:latest
           EOF
-
