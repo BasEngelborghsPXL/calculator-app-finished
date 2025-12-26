@@ -25,5 +25,5 @@ jobs:
             docker rm app || true
             docker run -d \
               --name app \
-              -p 80:80 \
+              -p 80:8080 \
               123c1pher/lab4:latest
