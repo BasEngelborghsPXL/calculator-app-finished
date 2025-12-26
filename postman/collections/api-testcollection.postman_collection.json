@@ -1,0 +1,161 @@
+{
+  "info": {
+    "_postman_id": "3eb0b500-8b73-4db3-8ce3-4d96a3ad5c8d",
+    "name": "api-testcollection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "post-newpet",
+      "id": "64aead28-1a5d-4b4a-865f-cbc33ecf9f30",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 12304449,\r\n  \"name\": \"PXL-test-pet\",\r\n  \"status\": \"available\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/v2/pet",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "v2",
+            "pet"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-idpet",
+      "id": "de3d90fb-4c08-48f7-84ef-6fd79b442f84",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/v2/pet/12304449",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "v2",
+            "pet",
+            "12304449"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-allpets",
+      "id": "96b1dd3c-bf88-4415-81e1-d54e67a894b3",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/v2/pet/findByStatus?status=available",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "v2",
+            "pet",
+            "findByStatus"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "available"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete-idpet",
+      "id": "8c4e92eb-ec75-4aee-aa55-5a8e34ea17b4",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/v2/pet/12304449",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "v2",
+            "pet",
+            "12304449"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-deleteconfirm",
+      "id": "8a0914c0-4757-4606-87ee-cbbcb4e4d73c",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/v2/pet/12304449",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "v2",
+            "pet",
+            "12304449"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-inventorystore",
+      "id": "dd1a57d8-6440-4d53-bd40-15a264e2ff57",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/v2/store/inventory",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "v2",
+            "store",
+            "inventory"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "id": "4e2d5110-9e78-4781-87f5-00a4fb3c28a2",
+      "key": "baseURL",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
