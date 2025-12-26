@@ -13,17 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.PROD_IP }} >> ~/.ssh/known_hosts
-
-      - name: Deploy Docker container
-        run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
-            ${{ secrets.SSH_USER }}@${{ secrets.PROD_IP }} << 'EOF'
+      - name: Execute remote SSH commands using ssh key
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
             docker pull 123c1pher/lab4:latest
             docker stop app || true
             docker rm app || true
@@ -31,4 +27,3 @@ jobs:
               --name app \
               -p 80:80 \
               123c1pher/lab4:latest
-          EOF
